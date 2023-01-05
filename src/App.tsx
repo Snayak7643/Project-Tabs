@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { FaAngleDoubleRight } from "react-icons/fa";
 function App() {
   const url = "https://course-api.com/react-tabs-project";
 
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any[]>([]);
+  const [index, setIndex] = useState<number>(0);
 
   useEffect(() => {
     const fetching = async () => {
@@ -12,8 +14,45 @@ function App() {
     };
     fetching();
   }, []);
-
-  return <h1>Hello</h1>;
+  if (data.length === 0) {
+    return <h1 className="loading">Loading...</h1>;
+  } else {
+    return (
+      <section className="section">
+        <div className="title">
+          <h2 className="loading">Jobs</h2>
+          {data.map((job, i) => {
+            return (
+              <button
+                key={i}
+                className="job-btn"
+                onClick={() => {
+                  setIndex(i);
+                }}
+              >
+                {job.company}
+              </button>
+            );
+          })}
+          <div className="job-info">
+            <h2 className="loading">{data[index].title}</h2>
+            <h3 className="loading">{data[index].company}</h3>
+            <p className="loading">{data[index].dates}</p>
+          </div>
+          <ul className="job-info">
+            {data[index].duties.map((duty: string, i: number) => {
+              return (
+                <li key={i} className="job-desc">
+                  <FaAngleDoubleRight className="job-icon" />
+                  {duty}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      </section>
+    );
+  }
 }
 
 export default App;
