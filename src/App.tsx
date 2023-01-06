@@ -25,7 +25,7 @@ function App() {
             return (
               <button
                 key={i}
-                className="job-btn"
+                className={i === index ? "active-btn" : "job-btn"}
                 onClick={() => {
                   setIndex(i);
                 }}
@@ -50,6 +50,24 @@ function App() {
             })}
           </ul>
         </div>
+        <button
+          className="btn"
+          onClick={() => {
+            const name = prompt("Enter Your Name");
+            if (name !== null) {
+              alert(
+                "Congrats! " +
+                  name +
+                  " You Applied for " +
+                  data[index].title +
+                  " Role in " +
+                  data[index].company
+              );
+            }
+          }}
+        >
+          Apply
+        </button>
       </section>
     );
   }
