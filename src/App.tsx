@@ -5,15 +5,25 @@ function App() {
 
   const [data, setData] = useState<any[]>([]);
   const [index, setIndex] = useState<number>(0);
+  const [error, setError] = useState<boolean>(false);
 
   useEffect(() => {
-    const fetching = async () => {
-      const response = await fetch(url);
-      const res = await response.json();
-      setData(res);
-    };
-    fetching();
+    try {
+      setError(false);
+      const fetching = async () => {
+        const response = await fetch(url);
+        const res = await response.json();
+        setData(res);
+        console.log(res);
+      };
+      fetching();
+    } catch (err) {
+      setError(true);
+    }
   }, []);
+  if (error === true) {
+    return <h1 className="loading">Error</h1>;
+  }
   if (data.length === 0) {
     return <h1 className="loading">Loading...</h1>;
   } else {
